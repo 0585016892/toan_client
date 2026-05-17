@@ -152,11 +152,17 @@ export default function CartPage() {
         coupon_id: selectedCoupon?.id || null,
         total_amount: total,
       });
-      msgApi.success("Gửi yêu cầu báo giá thành công!");
       clearCart();
-      setTimeout(() => navigate("/"), 2000);
+      navigate("/order-success", {
+        replace: true,
+        state: {
+          name: company.name,
+          phone: company.phone,
+          total: formatVND(total),
+        },
+      });
     } catch (err) {
-      msgApi.error("Lỗi: " + (err.response?.data?.message || "Hệ thuật bận"));
+      msgApi.error("Lỗi: " + (err.response?.data?.message || "Hệ thống bận"));
       setLoading(false);
     }
   };
@@ -180,7 +186,7 @@ export default function CartPage() {
               }
             />
             <Text strong style={{ marginTop: 16, display: "block" }}>
-              Đang gửi yêu cầu báo giá...
+              Đang gửi yêu cầu đặt hàng...
             </Text>
           </div>
         </div>
@@ -303,7 +309,7 @@ export default function CartPage() {
                 <Card
                   title={
                     <Space>
-                      <UserOutlined /> Thông tin nhận báo giá
+                      <UserOutlined /> Thông tin đặt hàng
                     </Space>
                   }
                   bordered={false}
@@ -436,7 +442,7 @@ export default function CartPage() {
 
                 <Card bordered={false} style={styles.summaryCard}>
                   <Title level={4} style={{ color: "#fff", marginBottom: 24 }}>
-                    Tóm tắt báo giá
+                    Tóm tắt đơn hàng
                   </Title>
 
                   <div style={styles.summaryRow}>
@@ -494,7 +500,7 @@ export default function CartPage() {
                     style={styles.btnSubmit}
                     onClick={submitOrder}
                   >
-                    GỬI YÊU CẦU BÁO GIÁ
+                    XÁC NHẬN ĐẶT HÀNG
                   </Button>
                 </Card>
               </div>
