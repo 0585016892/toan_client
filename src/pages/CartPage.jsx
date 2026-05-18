@@ -166,6 +166,7 @@ export default function CartPage() {
       setLoading(false);
     }
   };
+  console.log("cartItems:::", cartItems);
 
   const formatVND = (v) => `${Math.floor(v).toLocaleString("vi-VN")} ₫`;
 
@@ -297,7 +298,7 @@ export default function CartPage() {
                             danger
                             shape="circle"
                             icon={<DeleteOutlined />}
-                            onClick={() => removeFromCart(i.id)}
+                            onClick={() => removeFromCart(i.product_id)}
                           />
                         ),
                       },

@@ -1,3 +1,4 @@
+import { message } from "antd";
 import { createContext, useContext, useState } from "react";
 
 const CartContext = createContext();
@@ -5,33 +6,30 @@ const CartContext = createContext();
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
 
-const addToCart = (product) => {
-  setCartItems((prev) => {
-    const exist = prev.find(
-      (p) => p.product_id === product.product_id
-    );
+  const addToCart = (product) => {
+    setCartItems((prev) => {
+      const exist = prev.find((p) => p.product_id === product.product_id);
 
-    if (exist) {
-      return prev.map((p) =>
-        p.product_id === product.product_id
-          ? { ...p, quantity: p.quantity + product.quantity }
-          : p
-      );
-    }
+      if (exist) {
+        return prev.map((p) =>
+          p.product_id === product.product_id
+            ? { ...p, quantity: p.quantity + product.quantity }
+            : p,
+        );
+      }
 
-    return [...prev, product];
-  });
-};
+      return [...prev, product];
+    });
+  };
   const updateQuantity = (id, quantity) => {
-    setCartItems(prev =>
-      prev.map(p =>
-        p.product_id === id ? { ...p, quantity } : p
-      )
+    setCartItems((prev) =>
+      prev.map((p) => (p.product_id === id ? { ...p, quantity } : p)),
     );
   };
 
   const removeFromCart = (id) => {
-    setCartItems(prev => prev.filter(p => p.product_id !== id));
+    setCartItems((prev) => prev.filter((p) => p.product_id !== id));
+    message.success("Đã xóa sản phẩm khỏi giỏ hàng");
   };
 
   const clearCart = () => setCartItems([]);
@@ -56,8 +54,8 @@ const addToCart = (product) => {
         updateQuantity,
         removeFromCart,
         clearCart,
-        totalQuantity,   // 👈 thêm
-        totalPrice       // 👈 thêm
+        totalQuantity, // 👈 thêm
+        totalPrice, // 👈 thêm
       }}
     >
       {children}
