@@ -24,7 +24,8 @@ import {
   DeleteOutlined,
   ShoppingCartOutlined,
   SendOutlined,
-  BankOutlined,
+  PlusOutlined, // Thêm cái này
+  MinusOutlined, // Hoặc dùng cái này cho nút giảm,
   TagOutlined,
   LoadingOutlined,
   UserOutlined,
@@ -247,7 +248,7 @@ export default function CartPage() {
                             <Avatar
                               shape="round"
                               size={80}
-                              src={`${process.env.REACT_APP_WEB_URL}/products/${i.image}`}
+                              src={`${process.env.REACT_APP_WEB_IMG_URL}/products/${i.image}`}
                               style={{ border: "1px solid #f0f0f0" }}
                             />
                             <div>
@@ -264,22 +265,57 @@ export default function CartPage() {
                       },
                       {
                         title: "Số lượng",
-                        width: 140,
+                        width: 160,
                         align: "center",
                         render: (_, i) => (
-                          <Input
-                            type="number"
-                            min={1}
-                            value={i.quantity}
-                            onChange={(e) =>
-                              updateQuantity(i.id, e.target.value)
-                            }
+                          <Space
                             style={{
-                              width: 80,
-                              textAlign: "center",
-                              borderRadius: 8,
+                              background: "#f5f5f5",
+                              padding: "4px 8px",
+                              borderRadius: 10,
+                              border: "1px solid #d9d9d9",
                             }}
-                          />
+                          >
+                            <Button
+                              type="text"
+                              size="small"
+                              icon={<MinusOutlined style={{ fontSize: 12 }} />} // Hoặc MinusOutlined
+                              disabled={i.quantity <= 1}
+                              onClick={() =>
+                                updateQuantity(i.id, Number(i.quantity) - 1)
+                              }
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                            />
+
+                            <Text
+                              strong
+                              style={{
+                                minWidth: 30,
+                                textAlign: "center",
+                                display: "inline-block",
+                              }}
+                            >
+                              {i.quantity}
+                            </Text>
+
+                            <Button
+                              type="text"
+                              size="small"
+                              icon={<PlusOutlined style={{ fontSize: 12 }} />}
+                              onClick={() =>
+                                updateQuantity(i.id, Number(i.quantity) + 1)
+                              }
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                            />
+                          </Space>
                         ),
                       },
                       {

@@ -21,9 +21,12 @@ export function CartProvider({ children }) {
       return [...prev, product];
     });
   };
-  const updateQuantity = (id, quantity) => {
+  const updateQuantity = (productId, newQty) => {
+    if (newQty < 1) return; // Không cho giảm xuống dưới 1
     setCartItems((prev) =>
-      prev.map((p) => (p.product_id === id ? { ...p, quantity } : p)),
+      prev.map((item) =>
+        item.id === productId ? { ...item, quantity: parseInt(newQty) } : item,
+      ),
     );
   };
 

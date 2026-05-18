@@ -18,8 +18,8 @@ const customerApi = {
   /* ================== PASSWORD ================== */
 
   // Đổi mật khẩu khách hàng
-  changePassword(data) {
-    return axiosClient.put(`/customers/change-password`, data);
+  changePassword(id, data) {
+    return axiosClient.put(`/customers/cus/change-password`, { ...data, id });
     // body: { old_password, new_password }
   },
 

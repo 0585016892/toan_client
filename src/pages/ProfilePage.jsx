@@ -100,13 +100,16 @@ export default function ProfilePage() {
   /* ================= CHANGE PASSWORD ================= */
   const onChangePassword = async (values) => {
     try {
-      await customerApi.changePassword(values);
+      const res = await customerApi.changePassword(user.id, values);
+      console.log(res);
+
       message.success("Đổi mật khẩu thành công");
       pwdForm.resetFields();
     } catch {
       message.error("Mật khẩu cũ không chính xác");
     }
   };
+  console.log(user);
 
   const handleLogout = () => {
     logout();
